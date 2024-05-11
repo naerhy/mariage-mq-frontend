@@ -1,0 +1,116 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  --background: #e4e4e7;
+  --background-success: #86efac;
+  --background-error: #fca5a5;
+  --highlight: #3b82f6;
+  --text-primary: #18181b;
+  --text-secondary: #3f3f46;
+  --text-highlight: #e4e4e7;
+  --text-success: #16a34a;
+  --text-error: #dc2626;
+  --stroke: #a1a1aa;
+  --stroke-success: #16a34a;
+  --stroke-error: #dc2626;
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family:
+		system-ui,
+		"Segoe UI",
+		Roboto,
+		Helvetica,
+		Arial,
+		sans-serif,
+		"Apple Color Emoji",
+		"Segoe UI Emoji";
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 80rem;
+  min-height: 100vh;
+  padding: 0 1rem;
+  row-gap: 2rem;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img,
+svg {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+input[type=email],
+input[type=text],
+input[type=password],
+select {
+  border: 1px solid var(--stroke);
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+}
+
+input[type=email],
+input[type=text],
+input[type=password] {
+  background-color: #f4f4f5;
+}
+
+input[type=email]:focus,
+input[type=text]:focus,
+input[type=password]:focus {
+  outline: 1px solid var(--highlight);
+}
+
+input[aria-invalid="true"] {
+  border: 1px solid var(--stroke-error);
+}
+
+small {
+  font-size: 80%;
+}
+
+.btn {
+  background-color: var(--highlight);
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--text-highlight);
+  cursor: pointer;
+  display: block;
+  padding: 0.75rem 1rem;
+}
+
+.btn:hover {
+  background-color: #2563eb;
+}
+
+.no-btn {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.no-btn svg {
+  stroke: var(--text-secondary);
+}
+
+.no-btn svg:hover {
+  stroke: var(--text-primary);
+}
