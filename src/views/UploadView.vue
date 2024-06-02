@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import axios from 'axios';
-  import { baseURL } from '../shared';
+  import { ref } from "vue";
+  import axios from "axios";
+  import { baseURL } from "../shared";
 
-  import type { AuthInfo, Photo } from '../shared';
+  import type { AuthInfo, Photo } from "../shared";
 
   interface FileWithUpload {
     file: File;
@@ -30,7 +30,7 @@
         try {
           await axios.post<Photo>(`${baseURL}/photos`, formData, {
             headers: {
-              "Authorization": `Bearer ${props.authInfo.token}`,
+              Authorization: `Bearer ${props.authInfo.token}`,
               "Content-Type": "multipart/form-data"
             }
           });
@@ -59,13 +59,7 @@
     <form @submit="handleSubmit">
       <label>
         <span>Sélectionner des photos</span>
-        <input
-          type="file"
-          @change="handleChange"
-          accept="image/jpeg"
-          multiple
-          required
-        />
+        <input type="file" @change="handleChange" accept="image/jpeg" multiple required />
         <small>Format .jpeg uniquement</small>
       </label>
       <button class="btn">Mettre en ligne</button>
@@ -142,12 +136,12 @@
   }
 
   .success {
-		background-color: var(--background-success);
+    background-color: var(--background-success);
     color: var(--text-success);
   }
 
   .error {
-		background-color: var(--background-error);
+    background-color: var(--background-error);
     color: var(--text-error);
   }
 </style>

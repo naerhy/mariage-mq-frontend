@@ -11,10 +11,10 @@
   const props = defineProps<{
     id: number;
     photo: Photo;
-    authInfo: AuthInfo
+    authInfo: AuthInfo;
   }>();
 
-	const emit = defineEmits<{
+  const emit = defineEmits<{
     (e: "modalClose"): void;
     (e: "deletePhoto", id: number, photo: Photo): void;
     (e: "updatePhoto", id: number, photo: Photo, source: string, subjects: string[]): void;
@@ -53,23 +53,19 @@
       <select v-model="selectedSource">
         <option v-for="source in sources.filter((s) => s !== `Toutes`)">{{ source }}</option>
       </select>
-      <button
-        class="btn"
-        type="button"
-        @click="emit(`updatePhoto`, id, photo, selectedSource, subjectsOnPicture)"
-      >
+      <button class="btn" type="button" @click="emit(`updatePhoto`, id, photo, selectedSource, subjectsOnPicture)">
         Mettre à jour
       </button>
-      <button class="btn" type="button" @click="emit(`deletePhoto`, id, photo)">
-        Supprimer
-      </button>
+      <button class="btn" type="button" @click="emit(`deletePhoto`, id, photo)">Supprimer</button>
     </div>
     <button class="no-btn" type="button" @click="emit(`switchPhoto`, id, `left`)">
       <ChevronLeft :style="{ width: `24px`, height: `24px` }" />
     </button>
     <figure>
       <img :src="`${staticBaseURL}/compressed/${photo.name}`" alt="Photo mise en avant" />
-      <figcaption><small>{{ photo.name }}</small></figcaption>
+      <figcaption>
+        <small>{{ photo.name }}</small>
+      </figcaption>
     </figure>
     <button class="no-btn" type="button" @click="emit(`switchPhoto`, id, `right`)">
       <ChevronRight :style="{ width: `24px`, height: `24px` }" />

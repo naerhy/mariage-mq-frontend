@@ -13,12 +13,12 @@
   }
 
   div:before {
-    content: v-bind("'"' + text + '"'");
+    content: v-bind("'" " + text + " "'");
   }
 
   @keyframes l1 {
     to {
-      opacity: 0
+      opacity: 0;
     }
   }
 </style>

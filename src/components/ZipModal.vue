@@ -15,7 +15,7 @@
     filenames: string[];
   }>();
 
-	const emit = defineEmits<{ (e: "modalClose"): void }>();
+  const emit = defineEmits<{ (e: "modalClose"): void }>();
 
   const nbFiles = computed(() => props.filenames.length);
 
@@ -36,7 +36,7 @@
         },
         {
           headers: {
-            "Authorization": `Bearer ${props.token}`
+            Authorization: `Bearer ${props.token}`
           }
         }
       );
@@ -47,7 +47,6 @@
       isFetching.value = false;
     }
   }
-
 </script>
 
 <template>
@@ -62,12 +61,10 @@
       <div class="zip-dl" v-else-if="zip">
         <p>
           Votre fichier est en cours de création, un email vous sera envoyé dès qu'il sera prêt.
-          <br>
+          <br />
           Vous pouvez fermer cette fenêtre.
         </p>
-        <UndrawDownload
-          :style="{ maxWidth: `400px` }"
-        />
+        <UndrawDownload :style="{ maxWidth: `400px` }" />
       </div>
       <form class="recap-dl" v-else @submit.prevent="handleSubmit">
         <p>Vous etes sur le point de créer un fichier zip contenant {{ nbFiles }} photos.</p>
@@ -83,7 +80,7 @@
 
 <style scoped>
   .modal {
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     height: 100%;
     left: 0;
     position: fixed;

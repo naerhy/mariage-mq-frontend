@@ -22,7 +22,7 @@
 
   let timeoutID: number | undefined = undefined;
 
-  onMounted(() => timeoutID = setTimeout(() => emit("closeNotification"), 5_000));
+  onMounted(() => (timeoutID = setTimeout(() => emit("closeNotification"), 5_000)));
 
   onUnmounted(() => clearTimeout(timeoutID));
 </script>
@@ -42,7 +42,9 @@
 <style scoped>
   .notification {
     align-items: flex-start;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    box-shadow:
+      0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
     display: flex;
     justify-content: space-between;
     left: 50%;
@@ -55,21 +57,21 @@
     z-index: 10;
   }
 
-  .notification> div {
+  .notification > div {
     align-items: center;
     column-gap: 0.3rem;
     display: flex;
   }
 
   .success {
-		background-color: var(--background-success);
-		border: 1px solid var(--stroke-success);
-		color: var(--text-success);
+    background-color: var(--background-success);
+    border: 1px solid var(--stroke-success);
+    color: var(--text-success);
   }
 
-	.error {
-		background-color: var(--background-error);
-		border: 1px solid var(--stroke-error);
-		color: var(--text-error);
-	}
+  .error {
+    background-color: var(--background-error);
+    border: 1px solid var(--stroke-error);
+    color: var(--text-error);
+  }
 </style>

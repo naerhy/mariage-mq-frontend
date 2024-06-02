@@ -6,10 +6,10 @@
   import Notification from "../components/Notification.vue";
   import ZipModal from "../components/ZipModal.vue";
 
-  import type { AuthInfo, NotificationType, Photo } from '../shared';
+  import type { AuthInfo, NotificationType, Photo } from "../shared";
 
   interface Message {
-    type: NotificationType,
+    type: NotificationType;
     message: string;
   }
 
@@ -18,7 +18,7 @@
   const fetching = ref(true);
 
   const selectedSource = ref("Toutes");
-	const selectedSubjects = ref<string[]>([]);
+  const selectedSubjects = ref<string[]>([]);
 
   const subjectsMenuOpen = ref(false);
 
@@ -26,8 +26,8 @@
 
   const notification = ref<Message | null>(null);
 
-	const photos = ref<Photo[]>([]);
-	const displayedPhotos = computed(() => {
+  const photos = ref<Photo[]>([]);
+  const displayedPhotos = computed(() => {
     return photos.value.map((photo) => {
       if (selectedSource.value !== "Toutes" && photo.source !== selectedSource.value) {
         return false;
@@ -40,22 +40,20 @@
         }
         return true;
       } else {
-        return selectedSubjects.value.length
-          ? selectedSubjects.value.some((s) => photo.subjects.includes(s))
-          : true;
+        return selectedSubjects.value.length ? selectedSubjects.value.some((s) => photo.subjects.includes(s)) : true;
       }
     });
-	});
-	const nbDisplayedPhotos = computed(() => {
-		return displayedPhotos.value.reduce((nb, value) => {
-			if (value) {
+  });
+  const nbDisplayedPhotos = computed(() => {
+    return displayedPhotos.value.reduce((nb, value) => {
+      if (value) {
         nb++;
       }
-			return nb;
-		}, 0);
-	});
+      return nb;
+    }, 0);
+  });
 
-	const focusedPhoto = ref<{ id: number; photo: Photo } | null>(null);
+  const focusedPhoto = ref<{ id: number; photo: Photo } | null>(null);
 
   const zipModalOpen = ref(false);
 
@@ -82,17 +80,14 @@
         focusedPhoto.value = null;
       } else {
         if (evt.code === "ArrowLeft" || evt.code === "ArrowRight") {
-          const nextIndex = getNextPhotoIndex(
-            focusedPhoto.value.id,
-            evt.code === "ArrowLeft" ? "left" : "right"
-          );
+          const nextIndex = getNextPhotoIndex(focusedPhoto.value.id, evt.code === "ArrowLeft" ? "left" : "right");
           if (nextIndex !== -1) {
             focusedPhoto.value = { id: nextIndex, photo: photos.value[nextIndex] };
           }
         }
       }
     }
-  };
+  }
 
   function handleSwitchPhoto(id: number, side: "left" | "right"): void {
     const nextIndex = getNextPhotoIndex(id, side);
@@ -103,24 +98,26 @@
 
   onMounted(async () => {
     try {
-			const { data: _photos } = await axios.get<Photo[]>(`${baseURL}/photos`, {
-				headers: {
-					"Authorization": `Bearer ${props.authInfo.token}`
-				}
-			});
-      const photosWithTs = _photos.filter((photo) => photo.timestamp !== "0").sort((a, b) => {
-        // photos from Patrick have a different timestamp than others -> increase of 7270000ms
-        const patrickTs = BigInt(7270000);
-        const aTs = a.source === "Patrick" ? BigInt(a.timestamp) - patrickTs : BigInt(a.timestamp);
-        const bTs = b.source === "Patrick" ? BigInt(b.timestamp) - patrickTs : BigInt(b.timestamp);
-        if (aTs > bTs) {
-          return 1;
-        } else if (aTs < bTs) {
-          return -1;
-        } else {
-          return 0;
+      const { data: _photos } = await axios.get<Photo[]>(`${baseURL}/photos`, {
+        headers: {
+          Authorization: `Bearer ${props.authInfo.token}`
         }
       });
+      const photosWithTs = _photos
+        .filter((photo) => photo.timestamp !== "0")
+        .sort((a, b) => {
+          // photos from Patrick have a different timestamp than others -> increase of 7270000ms
+          const patrickTs = BigInt(7270000);
+          const aTs = a.source === "Patrick" ? BigInt(a.timestamp) - patrickTs : BigInt(a.timestamp);
+          const bTs = b.source === "Patrick" ? BigInt(b.timestamp) - patrickTs : BigInt(b.timestamp);
+          if (aTs > bTs) {
+            return 1;
+          } else if (aTs < bTs) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
       const photosWithoutTs = _photos.filter((photo) => photo.timestamp === "0");
       // workaround for photos to be correctly sorted
       photos.value = [...photosWithTs, ...photosWithoutTs];
@@ -135,12 +132,7 @@
     window.removeEventListener("keydown", handleKeyPress);
   });
 
-  async function handleUpdatePhoto(
-    id: number,
-    photo: Photo,
-    source: string,
-    subjects: string[]
-  ): Promise<void> {
+  async function handleUpdatePhoto(id: number, photo: Photo, source: string, subjects: string[]): Promise<void> {
     try {
       const { data: updatedPhoto } = await axios.patch<Photo>(
         `${baseURL}/photos/${photo.id}`,
@@ -150,7 +142,7 @@
         },
         {
           headers: {
-            "Authorization": `Bearer ${props.authInfo.token}`
+            Authorization: `Bearer ${props.authInfo.token}`
           }
         }
       );
@@ -166,7 +158,7 @@
     try {
       await axios.delete(`${baseURL}/photos/${photo.id}`, {
         headers: {
-          "Authorization": `Bearer ${props.authInfo.token}`
+          Authorization: `Bearer ${props.authInfo.token}`
         }
       });
       focusedPhoto.value = null;
@@ -198,11 +190,7 @@
 
 <template>
   <Teleport to="body">
-    <Notification
-      v-if="notification"
-      @close-notification="notification = null"
-      :type="notification.type"
-    >
+    <Notification v-if="notification" @close-notification="notification = null" :type="notification.type">
       <p>{{ notification.message }}</p>
     </Notification>
     <PhotoModal
@@ -227,20 +215,19 @@
     <h2>Liste des photos</h2>
     <div class="explanations">
       <p>
-        Toutes les photos de notre mariage sont répertoriées ci-dessous. Vous pouvez les filtrer
-        par sujet ainsi que par provenance.
+        Toutes les photos de notre mariage sont répertoriées ci-dessous. Vous pouvez les filtrer par sujet ainsi que par
+        provenance.
       </p>
       <p>
-        Cliquer sur une miniature permet d'afficher la photo en haute résolution. Une fois dans ce
-        mode, vous pouvez faire défiler les photos avec les flèches directionnelles de votre clavier,
-        et quitter avec la touche échap. Vous pouvez tout aussi bien utiliser les différentes
-        icones affichées pour effectuer ces actions, en plus de pouvoir télécharger chaque photo
-        individuellement via le bouton situé en haut a droite.
+        Cliquer sur une miniature permet d'afficher la photo en haute résolution. Une fois dans ce mode, vous pouvez
+        faire défiler les photos avec les flèches directionnelles de votre clavier, et quitter avec la touche échap.
+        Vous pouvez tout aussi bien utiliser les différentes icones affichées pour effectuer ces actions, en plus de
+        pouvoir télécharger chaque photo individuellement via le bouton situé en haut a droite.
       </p>
       <p>
-        Si vous souhaitez télécharger toutes les photos actuellement visibles dans la liste,
-        un bouton est prévu à cet effet. Après avoir renseigné votre addresse mail et attendu 
-        quelques minutes, un lien vous sera envoyé pour télécharger le fichier finalisé.
+        Si vous souhaitez télécharger toutes les photos actuellement visibles dans la liste, un bouton est prévu à cet
+        effet. Après avoir renseigné votre addresse mail et attendu quelques minutes, un lien vous sera envoyé pour
+        télécharger le fichier finalisé.
       </p>
     </div>
     <div class="filters">
@@ -249,13 +236,11 @@
         <select v-model="selectedSource">
           <option v-for="source in sources">{{ source }}</option>
         </select>
-        <p><small> {{ `Affichage de ${nbDisplayedPhotos} photo(s) sur ${photos.length}` }}</small></p>
+        <p>
+          <small> {{ `Affichage de ${nbDisplayedPhotos} photo(s) sur ${photos.length}` }}</small>
+        </p>
       </div>
-      <button
-        class="btn"
-        type="button"
-        @click="zipModalOpen = true"
-      >Télécharger toutes les photos visibles</button>
+      <button class="btn" type="button" @click="zipModalOpen = true">Télécharger toutes les photos visibles</button>
     </div>
     <div v-if="subjectsMenuOpen" class="subjects-menu">
       <ul>
@@ -278,10 +263,7 @@
         v-show="displayedPhotos[index]"
         @click="focusedPhoto = { id: index, photo: photos[index] }"
       >
-        <img
-          :src="`${staticBaseURL}/${photo.thumbnailURL}`"
-          :loading="index < 20 ? `eager` : `lazy`"
-        />
+        <img :src="`${staticBaseURL}/${photo.thumbnailURL}`" :loading="index < 20 ? `eager` : `lazy`" />
       </li>
     </ul>
   </section>
