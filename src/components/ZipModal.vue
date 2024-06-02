@@ -61,10 +61,10 @@
       <div class="zip-dl" v-else-if="zip">
         <p>
           Votre fichier est en cours de création, un email vous sera envoyé dès qu'il sera prêt.
-          <br />
-          Vous pouvez fermer cette fenêtre.
+          <b>Vérifiez bien qu'il n'atterisse pas dans votre dossier de spams.</b>
         </p>
-        <UndrawDownload :style="{ maxWidth: `400px` }" />
+        <p>Vous pouvez maintenant fermer cette fenêtre.</p>
+        <UndrawDownload :style="{ maxWidth: `400px`, alignSelf: `center` }" />
       </div>
       <form class="recap-dl" v-else @submit.prevent="handleSubmit">
         <p>Vous etes sur le point de créer un fichier zip contenant {{ nbFiles }} photos.</p>
@@ -109,7 +109,6 @@
   }
 
   .zip-dl {
-    align-items: center;
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
