@@ -13,7 +13,7 @@
   }
 
   div:before {
-    content: v-bind("'" " + text + " "'");
+    content: v-bind("'"' + text + '"'");
   }
 
   @keyframes l1 {

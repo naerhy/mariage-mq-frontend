@@ -237,7 +237,7 @@
           <option v-for="source in sources">{{ source }}</option>
         </select>
         <p>
-          <small> {{ `Affichage de ${nbDisplayedPhotos} photo(s) sur ${photos.length}` }}</small>
+          <small>Affichage de {{ nbDisplayedPhotos }} photo(s) sur {{ photos.length }}</small>
         </p>
       </div>
       <button class="btn" type="button" @click="zipModalOpen = true">Télécharger toutes les photos visibles</button>
